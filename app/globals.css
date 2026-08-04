@@ -23,7 +23,7 @@ body {
   margin: 0;
   background: var(--cream);
   color: var(--ink);
-  font-family: var(--font-sans), "PingFang TC", "Noto Sans TC", sans-serif;
+  font-family: "Avenir Next", Avenir, "PingFang TC", "Noto Sans TC", sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 button, textarea { font: inherit; }
@@ -130,7 +130,7 @@ h1 > span { color: var(--coral); }
 .quiz-options { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
 .quiz-option { display: flex; align-items: center; gap: 10px; min-height: 51px; padding: 9px 12px; border: 1px solid #d7d4ca; border-radius: 10px; background: white; cursor: pointer; font-family: Georgia, serif; font-size: 15px; transition: .18s ease; }
 .quiz-option:hover { border-color: var(--green-2); transform: translateY(-2px); }
-.quiz-option > span { display: grid; place-items: center; width: 25px; height: 25px; border-radius: 7px; background: #efede7; font-family: var(--font-sans), sans-serif; font-size: 9px; font-weight: 850; }
+.quiz-option > span { display: grid; place-items: center; width: 25px; height: 25px; border-radius: 7px; background: #efede7; font-family: "Avenir Next", Avenir, sans-serif; font-size: 9px; font-weight: 850; }
 .quiz-option.correct { border-color: var(--green-2); background: var(--mint); }
 .quiz-option.wrong { border-color: var(--coral); background: var(--coral-pale); }
 .quiz-feedback { display: grid; gap: 3px; margin-top: 14px; padding: 12px 14px; border-radius: 9px; font-size: 11px; }
