@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 type Lesson = {
   id: string;
@@ -238,6 +238,7 @@ const translations = [
 ];
 
 const specialChars = ["ĉ", "ĝ", "ĥ", "ĵ", "ŝ", "ŭ", "Ĉ", "Ĝ", "Ĥ", "Ĵ", "Ŝ", "Ŭ"];
+const LESSON_PROGRESS_KEY = "saluton.completed-lessons.v1";
 
 function normalize(value: string) {
   return value
@@ -262,10 +263,40 @@ export default function Home() {
   const [translationResult, setTranslationResult] = useState<"correct" | "close" | "wrong" | null>(null);
   const [showAnswers, setShowAnswers] = useState(false);
   const [score, setScore] = useState(0);
+  const [completedLessonIds, setCompletedLessonIds] = useState<string[]>([]);
+  const [progressLoaded, setProgressLoaded] = useState(false);
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
   const lesson = useMemo(() => lessons.find((item) => item.id === lessonId) ?? lessons[0], [lessonId]);
   const exercise = translations[exerciseIndex];
+  const completedCount = completedLessonIds.length;
+  const progressPercent = Math.round((completedCount / lessons.length) * 100);
+
+  useEffect(() => {
+    try {
+      const saved = window.localStorage.getItem(LESSON_PROGRESS_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed)) {
+          const lessonIds = new Set(lessons.map((item) => item.id));
+          setCompletedLessonIds(parsed.filter((id): id is string => typeof id === "string" && lessonIds.has(id)));
+        }
+      }
+    } catch {
+      // Damaged or unavailable browser storage should not block learning.
+    } finally {
+      setProgressLoaded(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!progressLoaded) return;
+    try {
+      window.localStorage.setItem(LESSON_PROGRESS_KEY, JSON.stringify(completedLessonIds));
+    } catch {
+      // The lesson still works when storage is unavailable or full.
+    }
+  }, [completedLessonIds, progressLoaded]);
 
   function chooseLesson(id: string) {
     setLessonId(id);
@@ -285,6 +316,12 @@ export default function Home() {
       input.focus();
       input.setSelectionRange(start + 1, start + 1);
     });
+  }
+
+  function answerLessonQuiz(choice: number) {
+    setQuizChoice(choice);
+    if (choice !== lesson.check.answer) return;
+    setCompletedLessonIds((current) => current.includes(lesson.id) ? current : [...current, lesson.id]);
   }
 
   function checkTranslation() {
@@ -331,24 +368,29 @@ export default function Home() {
           </button>
         </nav>
 
-        <div className="course-label">基礎路線 · 6 個單元</div>
+        <div className="course-label">基礎路線 · {lessons.length} 個單元</div>
         <div className="lesson-list">
-          {lessons.map((item, index) => (
-            <button
-              key={item.id}
-              className={mode === "grammar" && item.id === lessonId ? "lesson-link active" : "lesson-link"}
-              onClick={() => chooseLesson(item.id)}
-            >
-              <span className={index < 2 ? "lesson-status done" : "lesson-status"}>{index < 2 ? "✓" : item.unit}</span>
-              <span><b>{item.title}</b><small>{item.subtitle}</small></span>
-            </button>
-          ))}
+          {lessons.map((item) => {
+            const isCompleted = completedLessonIds.includes(item.id);
+            return (
+              <button
+                key={item.id}
+                className={mode === "grammar" && item.id === lessonId ? "lesson-link active" : "lesson-link"}
+                onClick={() => chooseLesson(item.id)}
+              >
+                <span className={isCompleted ? "lesson-status done" : "lesson-status"}>{isCompleted ? "✓" : item.unit}</span>
+                <span><b>{item.title}</b><small>{item.subtitle}</small></span>
+              </button>
+            );
+          })}
         </div>
 
         <div className="sidebar-progress">
-          <div className="progress-copy"><span>本週進度</span><b>2 / 6</b></div>
-          <div className="progress-track"><span /></div>
-          <p>Daŭrigu! 再完成一課 🌱</p>
+          <div className="progress-copy"><span>學習進度</span><b>{completedCount} / {lessons.length}</b></div>
+          <div className="progress-track" role="progressbar" aria-label="文法課程完成進度" aria-valuemin={0} aria-valuemax={lessons.length} aria-valuenow={completedCount}>
+            <span style={{ width: `${progressPercent}%` }} />
+          </div>
+          <p>{completedCount === lessons.length ? "Bonege! 基礎路線完成 🎉" : completedCount === 0 ? "答對單元測驗，開始累積進度 🌱" : "Daŭrigu! 再完成一課 🌱"}</p>
         </div>
       </aside>
 
@@ -417,7 +459,7 @@ export default function Home() {
                   {lesson.check.options.map((option, index) => {
                     const isAnswered = quizChoice !== null;
                     const className = isAnswered && index === lesson.check.answer ? "quiz-option correct" : isAnswered && index === quizChoice ? "quiz-option wrong" : "quiz-option";
-                    return <button className={className} key={option} onClick={() => setQuizChoice(index)}><span>{String.fromCharCode(65 + index)}</span>{option}</button>;
+                    return <button className={className} key={option} onClick={() => answerLessonQuiz(index)}><span>{String.fromCharCode(65 + index)}</span>{option}</button>;
                   })}
                 </div>
                 {quizChoice !== null && (
