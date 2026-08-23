@@ -2,6 +2,13 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 
+type QuizQuestion = {
+  question: string;
+  options: string[];
+  answer: number;
+  explain: string;
+};
+
 type Lesson = {
   id: string;
   unit: string;
@@ -12,7 +19,7 @@ type Lesson = {
   endings: { ending: string; label: string; example: string; tone: string }[];
   example: { eo: string; zh: string; parts: { text: string; role: string; tone: string }[] };
   tip: string;
-  check: { question: string; options: string[]; answer: number; explain: string };
+  checks: QuizQuestion[];
 };
 
 const lessons: Lesson[] = [
@@ -40,12 +47,26 @@ const lessons: Lesson[] = [
       ],
     },
     tip: "把同一個字根換上不同詞尾試試看：san-o（健康）、san-a（健康的）、san-e（健康地）。",
-    check: {
-      question: "哪一個字最適合放進：Ŝi dancas ___.（她優雅地跳舞。）",
-      options: ["eleganto", "eleganta", "elegante"],
-      answer: 2,
-      explain: "要描述「怎麼跳」，需要副詞詞尾 -e，所以是 elegante。",
-    },
+    checks: [
+      {
+        question: "哪一個字最適合放進：Ŝi dancas ___.（她優雅地跳舞。）",
+        options: ["eleganto", "eleganta", "elegante"],
+        answer: 2,
+        explain: "要描述「怎麼跳」，需要副詞詞尾 -e，所以是 elegante。",
+      },
+      {
+        question: "哪個字表示「美麗的」？",
+        options: ["belo", "bela", "bele"],
+        answer: 1,
+        explain: "形容事物使用 -a 詞尾，所以「美麗的」是 bela。",
+      },
+      {
+        question: "Mi aŭdas belan ___.（我聽見一首美麗的歌。）",
+        options: ["kanton", "kanta", "kante"],
+        answer: 0,
+        explain: "這裡需要名詞「歌」作為受詞，因此是帶 -n 的 kanton。",
+      },
+    ],
   },
   {
     id: "plural-accusative",
@@ -71,12 +92,26 @@ const lessons: Lesson[] = [
       ],
     },
     tip: "形容詞要跟名詞一起配合：granda hundo → grandaj hundoj → grandajn hundojn。",
-    check: {
-      question: "「我看見紅色的花朵」應該用哪一組？",
-      options: ["ruĝa floroj", "ruĝajn florojn", "ruĝaj floron"],
-      answer: 1,
-      explain: "花朵是複數受詞，所以形容詞與名詞都要加 -j，再加 -n。",
-    },
+    checks: [
+      {
+        question: "「我看見紅色的花朵」應該用哪一組？",
+        options: ["ruĝa floroj", "ruĝajn florojn", "ruĝaj floron"],
+        answer: 1,
+        explain: "花朵是複數受詞，所以形容詞與名詞都要加 -j，再加 -n。",
+      },
+      {
+        question: "哪個形式表示「幾隻狗（受詞）」？",
+        options: ["hundoj", "hundon", "hundojn"],
+        answer: 2,
+        explain: "複數先加 -j，受格再加 -n，因此是 hundojn。",
+      },
+      {
+        question: "Mi aĉetas du ___.（我買兩本新書。）",
+        options: ["novajn librojn", "novaj libroj", "novan libron"],
+        answer: 0,
+        explain: "du 後的名詞仍是複數；整個名詞詞組又是受詞，所以使用 novajn librojn。",
+      },
+    ],
   },
   {
     id: "verbs",
@@ -103,12 +138,26 @@ const lessons: Lesson[] = [
       ],
     },
     tip: "另外記住：-i 是不定詞、-u 是意願／命令、-us 是假設條件。",
-    check: {
-      question: "「明天我們將旅行」的動詞應該是哪一個？",
-      options: ["vojaĝis", "vojaĝas", "vojaĝos"],
-      answer: 2,
-      explain: "morgaŭ（明天）指向未來，因此使用 -os：vojaĝos。",
-    },
+    checks: [
+      {
+        question: "「明天我們將旅行」的動詞應該是哪一個？",
+        options: ["vojaĝis", "vojaĝas", "vojaĝos"],
+        answer: 2,
+        explain: "morgaŭ（明天）指向未來，因此使用 -os：vojaĝos。",
+      },
+      {
+        question: "Hieraŭ ŝi ___.（昨天她工作。）",
+        options: ["laboras", "laboris", "laboros"],
+        answer: 1,
+        explain: "hieraŭ（昨天）表示過去，所以動詞使用 -is：laboris。",
+      },
+      {
+        question: "Bonvolu ___.（請坐。）",
+        options: ["sidi", "sidas", "sidu"],
+        answer: 0,
+        explain: "bonvolu 後面通常接不定詞 -i，因此是 Bonvolu sidi。",
+      },
+    ],
   },
   {
     id: "pronouns",
@@ -135,12 +184,26 @@ const lessons: Lesson[] = [
       ],
     },
     tip: "si 表示回指句子的主詞：Li lavas sin（他洗自己），不要用在句子的主詞位置。",
-    check: {
-      question: "「他們看見我們」應該怎麼說？",
-      options: ["Ilin vidas ni.", "Ili vidas nin.", "Ili vidas ni."],
-      answer: 1,
-      explain: "ili 是做動作的主詞；ni 是被看見的對象，所以變成 nin。",
-    },
+    checks: [
+      {
+        question: "「他們看見我們」應該怎麼說？",
+        options: ["Ilin vidas ni.", "Ili vidas nin.", "Ili vidas ni."],
+        answer: 1,
+        explain: "ili 是做動作的主詞；ni 是被看見的對象，所以變成 nin。",
+      },
+      {
+        question: "Mi amas ŝi. 問題在哪裡？",
+        options: ["ŝi 應為 ŝin", "mi 應為 min", "amas 應為 aman"],
+        answer: 0,
+        explain: "「她」是愛的對象，所以代名詞要加 -n，成為 ŝin。",
+      },
+      {
+        question: "Li lavas ___.（他洗自己。）",
+        options: ["lin", "sin", "ŝin"],
+        answer: 1,
+        explain: "動作回到同一個第三人稱主詞時，使用反身代名詞 sin。",
+      },
+    ],
   },
   {
     id: "correlatives",
@@ -166,12 +229,26 @@ const lessons: Lesson[] = [
       ],
     },
     tip: "先學詞尾：-u 人、-o 事物、-e 地點、-am 時間、-al 原因，再替換前綴。",
-    check: {
-      question: "如果 kie 是「哪裡」，那麼 nenie 是什麼？",
-      options: ["某處", "到處", "無處／哪裡都不"],
-      answer: 2,
-      explain: "neni- 表示「沒有任何」，-e 表示地點，因此 nenie 是「無處」。",
-    },
+    checks: [
+      {
+        question: "如果 kie 是「哪裡」，那麼 nenie 是什麼？",
+        options: ["某處", "到處", "無處／哪裡都不"],
+        answer: 2,
+        explain: "neni- 表示「沒有任何」，-e 表示地點，因此 nenie 是「無處」。",
+      },
+      {
+        question: "kial 問的是什麼？",
+        options: ["時間", "原因", "方式"],
+        answer: 1,
+        explain: "表格詞的 -al 表示原因，因此 kial 是「為什麼」。",
+      },
+      {
+        question: "「每個人」是哪個表格詞？",
+        options: ["ĉiu", "io", "neniu"],
+        answer: 0,
+        explain: "ĉi- 表示每一個，-u 表示個體，因此 ĉiu 是「每個人／每一個」。",
+      },
+    ],
   },
   {
     id: "word-order",
@@ -195,60 +272,150 @@ const lessons: Lesson[] = [
       ],
     },
     tip: "ne、nur、ankaŭ 等小詞通常緊靠它修飾的內容；介系詞也要放在所帶詞組前。",
-    check: {
-      question: "哪一句仍表示「狗追貓」？",
-      options: ["Hundon ĉasas kato.", "Katon ĉasas hundo.", "Kato ĉasas hundo."],
-      answer: 1,
-      explain: "katon 有 -n，所以貓是受詞；沒有 -n 的 hundo 是主詞。",
-    },
+    checks: [
+      {
+        question: "哪一句仍表示「狗追貓」？",
+        options: ["Hundon ĉasas kato.", "Katon ĉasas hundo.", "Kato ĉasas hundo."],
+        answer: 1,
+        explain: "katon 有 -n，所以貓是受詞；沒有 -n 的 hundo 是主詞。",
+      },
+      {
+        question: "哪句清楚表示「老鼠咬貓」？",
+        options: ["Muso mordas katon.", "Muson mordas kato.", "Muso mordas kato."],
+        answer: 0,
+        explain: "muso 沒有 -n，是主詞；katon 有 -n，是被咬的受詞。",
+      },
+      {
+        question: "ne 通常放在哪裡？",
+        options: ["固定在句尾", "被否定的內容前", "固定在介系詞後"],
+        answer: 1,
+        explain: "ne 通常緊接在要否定的詞或片語之前，讓否定範圍清楚。",
+      },
+    ],
   },
 ];
 
 const translations = [
   {
+    id: "cat-sees-dog",
     english: "The cat sees the dog.",
     note: "提示：動作的對象需要 -n",
     answers: ["La kato vidas la hundon.", "La kato la hundon vidas.", "La hundon vidas la kato."],
     required: ["la", "kato", "vidas", "la", "hundon"],
   },
   {
+    id: "learning-today",
     english: "I am learning Esperanto today.",
     note: "提示：語言名稱通常不用冠詞",
     answers: ["Mi lernas Esperanton hodiaŭ.", "Hodiaŭ mi lernas Esperanton.", "Mi hodiaŭ lernas Esperanton."],
     required: ["mi", "lernas", "esperanton", "hodiaŭ"],
   },
   {
+    id: "children-garden",
     english: "The children will play in the garden.",
     note: "提示：未來式是 -os",
     answers: ["La infanoj ludos en la ĝardeno.", "En la ĝardeno la infanoj ludos.", "La infanoj en la ĝardeno ludos."],
     required: ["la", "infanoj", "ludos", "en", "la", "ĝardeno"],
   },
   {
+    id: "speaks-clearly",
     english: "She speaks very clearly.",
     note: "提示：描述動作使用 -e",
     answers: ["Ŝi parolas tre klare.", "Tre klare ŝi parolas.", "Ŝi tre klare parolas."],
     required: ["ŝi", "parolas", "tre", "klare"],
   },
   {
+    id: "red-apples",
     english: "Tomorrow we will buy two red apples.",
-    note: "提示：數詞後名詞不加 -j，但受詞仍加 -n",
+    note: "提示：數詞本身不加 -j；名詞與形容詞仍標複數受格",
     answers: ["Morgaŭ ni aĉetos du ruĝajn pomojn.", "Ni aĉetos du ruĝajn pomojn morgaŭ.", "Du ruĝajn pomojn ni aĉetos morgaŭ."],
     required: ["morgaŭ", "ni", "aĉetos", "du", "ruĝajn", "pomojn"],
+  },
+  {
+    id: "want-coffee",
+    english: "Do you want coffee?",
+    note: "提示：是非問句以 ĉu 開頭",
+    answers: ["Ĉu vi volas kafon?", "Ĉu kafon vi volas?", "Ĉu vi kafon volas?"],
+    required: ["ĉu", "vi", "volas", "kafon"],
+  },
+  {
+    id: "sister-meat",
+    english: "My sister does not eat meat.",
+    note: "提示：ne 放在要否定的動詞前",
+    answers: ["Mia fratino ne manĝas viandon.", "Viandon mia fratino ne manĝas.", "Mia fratino viandon ne manĝas."],
+    required: ["mia", "fratino", "ne", "manĝas", "viandon"],
+  },
+  {
+    id: "near-sea",
+    english: "We live near the sea.",
+    note: "提示：「靠近」可以說 proksime al",
+    answers: ["Ni loĝas proksime al la maro.", "Proksime al la maro ni loĝas.", "Ni proksime al la maro loĝas."],
+    required: ["ni", "loĝas", "proksime", "al", "la", "maro"],
+  },
+  {
+    id: "interesting-book",
+    english: "This book is more interesting than that book.",
+    note: "提示：比較級使用 pli ... ol ...",
+    answers: ["Ĉi tiu libro estas pli interesa ol tiu libro.", "Pli interesa ol tiu libro estas ĉi tiu libro."],
+    required: ["ĉi", "tiu", "libro", "estas", "pli", "interesa", "ol", "tiu", "libro"],
+  },
+  {
+    id: "train-station",
+    english: "Where is the train station?",
+    note: "提示：詢問地點使用 kie",
+    answers: ["Kie estas la stacidomo?", "Kie la stacidomo estas?", "La stacidomo estas kie?"],
+    required: ["kie", "estas", "la", "stacidomo"],
+  },
+  {
+    id: "visited-us",
+    english: "They visited us yesterday.",
+    note: "提示：「我們」作受詞時是 nin",
+    answers: ["Ili vizitis nin hieraŭ.", "Hieraŭ ili vizitis nin.", "Nin ili vizitis hieraŭ."],
+    required: ["ili", "vizitis", "nin", "hieraŭ"],
+  },
+  {
+    id: "close-window",
+    english: "Please close the window.",
+    note: "提示：bonvolu 後面接不定詞 -i",
+    answers: ["Bonvolu fermi la fenestron.", "Bonvolu la fenestron fermi.", "La fenestron bonvolu fermi."],
+    required: ["bonvolu", "fermi", "la", "fenestron"],
   },
 ];
 
 const specialChars = ["ĉ", "ĝ", "ĥ", "ĵ", "ŝ", "ŭ", "Ĉ", "Ĝ", "Ĥ", "Ĵ", "Ŝ", "Ŭ"];
 const LESSON_PROGRESS_KEY = "saluton.completed-lessons.v1";
 
+function convertXSystem(value: string) {
+  const replacements: Record<string, string> = {
+    c: "ĉ", g: "ĝ", h: "ĥ", j: "ĵ", s: "ŝ", u: "ŭ",
+    C: "Ĉ", G: "Ĝ", H: "Ĥ", J: "Ĵ", S: "Ŝ", U: "Ŭ",
+  };
+
+  return value.replace(/([cghjsuCGHJSU])[xX]/g, (_, letter: string) => replacements[letter]);
+}
+
+function shuffleIndexes(length: number, firstToAvoid?: number) {
+  const indexes = Array.from({ length }, (_, index) => index);
+  for (let index = indexes.length - 1; index > 0; index -= 1) {
+    const swapIndex = Math.floor(Math.random() * (index + 1));
+    [indexes[index], indexes[swapIndex]] = [indexes[swapIndex], indexes[index]];
+  }
+  if (firstToAvoid !== undefined && indexes.length > 1 && indexes[0] === firstToAvoid) {
+    [indexes[0], indexes[1]] = [indexes[1], indexes[0]];
+  }
+  return indexes;
+}
+
+function randomQuizIndex(length: number, current = -1) {
+  if (length <= 1) return 0;
+  let next = current;
+  while (next === current) next = Math.floor(Math.random() * length);
+  return next;
+}
+
 function normalize(value: string) {
-  return value
+  return convertXSystem(value)
     .toLowerCase()
-    .replace(/cx/g, "ĉ")
-    .replace(/gx/g, "ĝ")
-    .replace(/hx/g, "ĥ")
-    .replace(/jx/g, "ĵ")
-    .replace(/sx/g, "ŝ")
-    .replace(/ux/g, "ŭ")
     .replace(/[.,!?;:“”"']/g, "")
     .trim()
     .replace(/\s+/g, " ");
@@ -257,36 +424,55 @@ function normalize(value: string) {
 export default function Home() {
   const [mode, setMode] = useState<"grammar" | "translate">("grammar");
   const [lessonId, setLessonId] = useState(lessons[0].id);
+  const [quizIndex, setQuizIndex] = useState(0);
   const [quizChoice, setQuizChoice] = useState<number | null>(null);
-  const [exerciseIndex, setExerciseIndex] = useState(0);
+  const [exerciseOrder, setExerciseOrder] = useState(() => translations.map((_, index) => index));
+  const [exercisePosition, setExercisePosition] = useState(0);
   const [translation, setTranslation] = useState("");
   const [translationResult, setTranslationResult] = useState<"correct" | "close" | "wrong" | null>(null);
   const [showAnswers, setShowAnswers] = useState(false);
-  const [score, setScore] = useState(0);
+  const [scoredExerciseIds, setScoredExerciseIds] = useState<string[]>([]);
   const [completedLessonIds, setCompletedLessonIds] = useState<string[]>([]);
+  const [showCourseCompletion, setShowCourseCompletion] = useState(false);
   const [progressLoaded, setProgressLoaded] = useState(false);
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
   const lesson = useMemo(() => lessons.find((item) => item.id === lessonId) ?? lessons[0], [lessonId]);
+  const currentCheck = lesson.checks[quizIndex] ?? lesson.checks[0];
+  const exerciseIndex = exerciseOrder[exercisePosition] ?? 0;
   const exercise = translations[exerciseIndex];
+  const score = scoredExerciseIds.length;
   const completedCount = completedLessonIds.length;
   const progressPercent = Math.round((completedCount / lessons.length) * 100);
 
   useEffect(() => {
-    try {
-      const saved = window.localStorage.getItem(LESSON_PROGRESS_KEY);
-      if (saved) {
-        const parsed = JSON.parse(saved);
-        if (Array.isArray(parsed)) {
-          const lessonIds = new Set(lessons.map((item) => item.id));
-          setCompletedLessonIds(parsed.filter((id): id is string => typeof id === "string" && lessonIds.has(id)));
+    const timer = window.setTimeout(() => {
+      try {
+        const saved = window.localStorage.getItem(LESSON_PROGRESS_KEY);
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          if (Array.isArray(parsed)) {
+            const lessonIds = new Set(lessons.map((item) => item.id));
+            const validIds = parsed.filter((id): id is string => typeof id === "string" && lessonIds.has(id));
+            setCompletedLessonIds(validIds);
+            setShowCourseCompletion(validIds.length === lessons.length);
+          }
         }
+      } catch {
+        // Damaged or unavailable browser storage should not block learning.
+      } finally {
+        setProgressLoaded(true);
       }
-    } catch {
-      // Damaged or unavailable browser storage should not block learning.
-    } finally {
-      setProgressLoaded(true);
-    }
+    }, 0);
+    return () => window.clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => {
+      setExerciseOrder(shuffleIndexes(translations.length));
+      setQuizIndex(randomQuizIndex(lessons[0].checks.length));
+    }, 0);
+    return () => window.clearTimeout(timer);
   }, []);
 
   useEffect(() => {
@@ -299,10 +485,18 @@ export default function Home() {
   }, [completedLessonIds, progressLoaded]);
 
   function chooseLesson(id: string) {
+    const target = lessons.find((item) => item.id === id) ?? lessons[0];
     setLessonId(id);
+    setQuizIndex(randomQuizIndex(target.checks.length));
     setQuizChoice(null);
+    setShowCourseCompletion(false);
     setMode("grammar");
     window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  function randomizeQuiz() {
+    setQuizIndex((current) => randomQuizIndex(lesson.checks.length, current));
+    setQuizChoice(null);
   }
 
   function addCharacter(character: string) {
@@ -320,20 +514,37 @@ export default function Home() {
 
   function answerLessonQuiz(choice: number) {
     setQuizChoice(choice);
-    if (choice !== lesson.check.answer) return;
+    if (choice !== currentCheck.answer) return;
     setCompletedLessonIds((current) => current.includes(lesson.id) ? current : [...current, lesson.id]);
+  }
+
+  function goToNextLesson() {
+    const lessonIndex = lessons.findIndex((item) => item.id === lesson.id);
+    const nextIncomplete = lessons
+      .map((_, offset) => lessons[(lessonIndex + offset + 1) % lessons.length])
+      .find((item) => !completedLessonIds.includes(item.id));
+
+    if (nextIncomplete) {
+      chooseLesson(nextIncomplete.id);
+      return;
+    }
+
+    setShowCourseCompletion(true);
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
   function checkTranslation() {
     if (!translation.trim()) return;
-    const user = normalize(translation);
+    const converted = convertXSystem(translation);
+    setTranslation(converted);
+    const user = normalize(converted);
     const exact = exercise.answers.some((answer) => normalize(answer) === user);
     const tokens = user.split(" ").sort();
     const expected = exercise.required.map(normalize).sort();
     const samePieces = tokens.length === expected.length && tokens.every((token, index) => token === expected[index]);
     if (exact || samePieces) {
       setTranslationResult("correct");
-      setScore((current) => current + (translationResult === "correct" ? 0 : 1));
+      setScoredExerciseIds((current) => current.includes(exercise.id) ? current : [...current, exercise.id]);
     } else {
       const hits = exercise.required.filter((token) => user.includes(normalize(token))).length;
       setTranslationResult(hits >= Math.ceil(exercise.required.length * 0.7) ? "close" : "wrong");
@@ -342,11 +553,17 @@ export default function Home() {
   }
 
   function nextExercise() {
-    setExerciseIndex((current) => (current + 1) % translations.length);
+    if (exercisePosition === exerciseOrder.length - 1) {
+      setExerciseOrder(shuffleIndexes(translations.length, exerciseIndex));
+      setExercisePosition(0);
+      setScoredExerciseIds([]);
+    } else {
+      setExercisePosition((current) => current + 1);
+    }
     setTranslation("");
     setTranslationResult(null);
     setShowAnswers(false);
-    inputRef.current?.focus();
+    requestAnimationFrame(() => inputRef.current?.focus());
   }
 
   return (
@@ -404,7 +621,31 @@ export default function Home() {
           </div>
         </header>
 
-        {mode === "grammar" ? (
+        {mode === "grammar" ? showCourseCompletion ? (
+          <div className="content-wrap course-complete">
+            <div className="completion-burst" aria-hidden="true">
+              <span>✦</span>
+              <strong>6 / 6</strong>
+              <small>finita!</small>
+            </div>
+            <div className="eyebrow">基礎路線完成</div>
+            <h1>Vi sukcesis<span>!</span></h1>
+            <p className="completion-lead">你已經完成所有基礎文法單元。詞尾、受格、動詞、代名詞、表格詞與自由語序，都已經成為你的 Esperanto 工具箱。</p>
+            <div className="completion-lessons" aria-label="已完成的單元">
+              {lessons.map((item) => (
+                <span key={item.id}><i>✓</i>{item.title}</span>
+              ))}
+            </div>
+            <div className="completion-progress">
+              <div><span>課程進度</span><b>100%</b></div>
+              <div className="progress-track" role="progressbar" aria-label="文法課程已完成" aria-valuemin={0} aria-valuemax={100} aria-valuenow={100}><span style={{ width: "100%" }} /></div>
+            </div>
+            <div className="completion-actions">
+              <button className="secondary-action completion-review" onClick={() => chooseLesson(lessons[0].id)}>↻ 回頭複習</button>
+              <button className="primary-action" onClick={() => setMode("translate")}>開始逆翻譯 <span>→</span></button>
+            </div>
+          </div>
+        ) : (
           <div className="content-wrap grammar-view">
             <div className="breadcrumbs"><span>文法學習</span><b>／</b><span>單元 {lesson.unit}</span></div>
             <section className="lesson-hero">
@@ -451,32 +692,29 @@ export default function Home() {
             <section className="quick-check">
               <div className="section-heading">
                 <div><span className="section-number coral-number">02</span><h2>換你試試看</h2></div>
-                <span className="one-question">1 題快速檢查</span>
+                <button className="one-question" onClick={randomizeQuiz}>隨機題庫 {lesson.checks.length} 題 · 換一題 ↻</button>
               </div>
               <div className="quiz-card">
-                <p className="quiz-question">{lesson.check.question}</p>
+                <p className="quiz-question">{currentCheck.question}</p>
                 <div className="quiz-options">
-                  {lesson.check.options.map((option, index) => {
+                  {currentCheck.options.map((option, index) => {
                     const isAnswered = quizChoice !== null;
-                    const className = isAnswered && index === lesson.check.answer ? "quiz-option correct" : isAnswered && index === quizChoice ? "quiz-option wrong" : "quiz-option";
+                    const className = isAnswered && index === currentCheck.answer ? "quiz-option correct" : isAnswered && index === quizChoice ? "quiz-option wrong" : "quiz-option";
                     return <button className={className} key={option} onClick={() => answerLessonQuiz(index)}><span>{String.fromCharCode(65 + index)}</span>{option}</button>;
                   })}
                 </div>
                 {quizChoice !== null && (
-                  <div className={quizChoice === lesson.check.answer ? "quiz-feedback success" : "quiz-feedback retry"}>
-                    <b>{quizChoice === lesson.check.answer ? "Bonege! 答對了" : "差一點，再看一次"}</b>
-                    <span>{lesson.check.explain}</span>
+                  <div className={quizChoice === currentCheck.answer ? "quiz-feedback success" : "quiz-feedback retry"}>
+                    <b>{quizChoice === currentCheck.answer ? "Bonege! 答對了" : "差一點，再看一次"}</b>
+                    <span>{currentCheck.explain}</span>
                   </div>
                 )}
               </div>
             </section>
 
             <div className="lesson-actions">
-              <button className="secondary-action" onClick={() => setQuizChoice(null)}>↻ 再複習一次</button>
-              <button className="primary-action" onClick={() => {
-                const next = lessons[(lessons.findIndex((item) => item.id === lesson.id) + 1) % lessons.length];
-                chooseLesson(next.id);
-              }}>下一個單元 <span>→</span></button>
+              <button className="secondary-action" onClick={randomizeQuiz}>↻ 換一題練習</button>
+              <button className="primary-action" onClick={goToNextLesson}>{completedCount === lessons.length ? "完成基礎路線" : "下一個單元"} <span>→</span></button>
             </div>
           </div>
         ) : (
@@ -492,7 +730,7 @@ export default function Home() {
             </section>
 
             <section className="translation-card">
-              <div className="exercise-meta"><span>句子 {String(exerciseIndex + 1).padStart(2, "0")}</span><div className="dot-progress">{translations.map((_, i) => <i className={i === exerciseIndex ? "active" : i < exerciseIndex ? "done" : ""} key={i} />)}</div></div>
+              <div className="exercise-meta"><span>隨機題目 {String(exercisePosition + 1).padStart(2, "0")} / {translations.length}</span><div className="dot-progress">{exerciseOrder.map((_, i) => <i className={i === exercisePosition ? "active" : i < exercisePosition ? "done" : ""} key={i} />)}</div></div>
               <p className="english-label">請翻譯這句英文</p>
               <h2>{exercise.english}</h2>
               <p className="exercise-note">{exercise.note}</p>
@@ -509,7 +747,7 @@ export default function Home() {
               />
 
               <div className="character-keyboard" aria-label="Esperanto 特殊字元鍵盤">
-                <span>特殊字元</span>
+                <span>特殊字元<br /><small>也可輸入 cx、gx、hx、jx、sx、ux</small></span>
                 <div>{specialChars.map((character) => <button key={character} onClick={() => addCharacter(character)}>{character}</button>)}</div>
               </div>
 
@@ -533,7 +771,7 @@ export default function Home() {
               <div className="translation-actions">
                 <button className="text-action" onClick={() => setShowAnswers((shown) => !shown)}>◎ {showAnswers ? "收起參考答案" : "查看參考答案"}</button>
                 {translationResult === "correct" ? (
-                  <button className="primary-action" onClick={nextExercise}>下一題 <span>→</span></button>
+                  <button className="primary-action" onClick={nextExercise}>{exercisePosition === exerciseOrder.length - 1 ? "開始新一輪" : "下一題"} <span>→</span></button>
                 ) : (
                   <button className="primary-action" onClick={checkTranslation} disabled={!translation.trim()}>檢查答案 <span>⌘↵</span></button>
                 )}
