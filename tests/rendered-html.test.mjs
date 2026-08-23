@@ -52,5 +52,6 @@ test("includes randomized practice, completion, and x-system support", async () 
   assert.match(page, /translationResult === "correct"\) nextExercise\(\)/);
   assert.match(page, /Esperanto 是名詞形式的語言名稱，不用冠詞/);
   assert.match(page, /id: "questions-negation"/);
+  assert.match(page, /Tiu ĉi libro estas pli interesa ol tiu libro\./);
   assert.match(css, /\.course-complete/);
 });

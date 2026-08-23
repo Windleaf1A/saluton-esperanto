@@ -532,7 +532,12 @@ const translations = [
     id: "interesting-book",
     english: "This book is more interesting than that book.",
     note: "提示：比較級使用 pli ... ol ...",
-    answers: ["Ĉi tiu libro estas pli interesa ol tiu libro.", "Pli interesa ol tiu libro estas ĉi tiu libro."],
+    answers: [
+      "Ĉi tiu libro estas pli interesa ol tiu libro.",
+      "Tiu ĉi libro estas pli interesa ol tiu libro.",
+      "Pli interesa ol tiu libro estas ĉi tiu libro.",
+      "Pli interesa ol tiu libro estas tiu ĉi libro.",
+    ],
     required: ["ĉi", "tiu", "libro", "estas", "pli", "interesa", "ol", "tiu", "libro"],
   },
   {
