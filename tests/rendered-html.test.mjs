@@ -43,11 +43,14 @@ test("includes randomized practice, completion, and x-system support", async () 
   ]);
 
   assert.equal((page.match(/id: "[a-z-]+",\n\s+english:/g) ?? []).length, 12);
-  assert.equal((page.match(/checks: \[/g) ?? []).length, 6);
+  assert.equal((page.match(/checks: \[/g) ?? []).length, 10);
   assert.match(page, /function shuffleIndexes/);
   assert.match(page, /function convertXSystem/);
   assert.match(page, /setTranslation\(converted\)/);
   assert.match(page, /className="content-wrap course-complete"/);
   assert.match(page, /Vi sukcesis/);
+  assert.match(page, /translationResult === "correct"\) nextExercise\(\)/);
+  assert.match(page, /Esperanto 是名詞形式的語言名稱，不用冠詞/);
+  assert.match(page, /id: "questions-negation"/);
   assert.match(css, /\.course-complete/);
 });

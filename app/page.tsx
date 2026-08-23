@@ -293,6 +293,182 @@ const lessons: Lesson[] = [
       },
     ],
   },
+  {
+    id: "determiners",
+    unit: "07",
+    title: "La 的聚光燈",
+    subtitle: "冠詞與限定詞",
+    eyebrow: "5 分鐘觀念",
+    summary: "Esperanto 只有定冠詞 la，沒有英文 a／an 那樣的不定冠詞。la 表示「你知道我說的是哪一個」；第一次提到或只談種類時，通常不放冠詞。",
+    endings: [
+      { ending: "la", label: "已知 · 特定的人事物", example: "la libro 那本書", tone: "sun" },
+      { ending: "∅", label: "新資訊 · 不特定", example: "libro 一本書", tone: "mint" },
+      { ending: "mia", label: "其他限定詞 · 不再加 la", example: "mia libro 我的書", tone: "coral" },
+    ],
+    example: {
+      eo: "Mi aĉetis libron. La libro estas interesa.",
+      zh: "我買了一本書。那本書很有趣。",
+      parts: [
+        { text: "Mi aĉetis", role: "我買了", tone: "violet" },
+        { text: "libron", role: "首次提到 · 不加 la", tone: "mint" },
+        { text: "La libro", role: "再次提到 · 加 la", tone: "sun" },
+        { text: "estas interesa", role: "很有趣", tone: "coral" },
+      ],
+    },
+    tip: "語言名稱若是省略 lingvo 的形容詞，要用 la：la angla、la franca；Esperanto 是名詞名稱，所以不用 la。",
+    checks: [
+      {
+        question: "哪一句正確表示「我正在學 Esperanto」？",
+        options: ["Mi lernas la Esperanton.", "Mi lernas Esperanton.", "Mi lernas Esperanto."],
+        answer: 1,
+        explain: "Esperanto 是名詞形式的語言名稱，不用 la；作為 lernas 的受詞要加 -n。",
+      },
+      {
+        question: "la 遇到複數或受格時會怎麼變？",
+        options: ["變成 laj／lan", "只變成 lan", "完全不變"],
+        answer: 2,
+        explain: "la 永遠保持原形；複數與受格標記放在名詞和形容詞上。",
+      },
+      {
+        question: "Mi havas hundon. ___ hundo estas blanka.",
+        options: ["La", "Unu", "Mia la"],
+        answer: 0,
+        explain: "第二句談的是剛提過的同一隻狗，因此用 la hundo。",
+      },
+    ],
+  },
+  {
+    id: "prepositions-direction",
+    unit: "08",
+    title: "地圖上的小箭頭",
+    subtitle: "介系詞與方向",
+    eyebrow: "6 分鐘觀念",
+    summary: "介系詞先畫出關係：en 是「在裡面」，sur 是「在上面」，al 是「朝向」。某些地點介系詞後加 -n，會把靜態位置變成移動的終點。",
+    endings: [
+      { ending: "en", label: "在裡面 · 靜態位置", example: "en la domo 在屋裡", tone: "mint" },
+      { ending: "al", label: "朝向 · 前往某處", example: "al la domo 前往屋子", tone: "sun" },
+      { ending: "en + n", label: "進入 · 方向終點", example: "en la domon 進屋裡", tone: "coral" },
+    ],
+    example: {
+      eo: "La kato kuras en la ĝardenon.",
+      zh: "那隻貓跑進花園裡。",
+      parts: [
+        { text: "La kato", role: "主詞 · 那隻貓", tone: "mint" },
+        { text: "kuras", role: "跑", tone: "violet" },
+        { text: "en", role: "進入某範圍", tone: "sun" },
+        { text: "la ĝardenon", role: "方向終點 -n", tone: "coral" },
+      ],
+    },
+    tip: "比較：Mi estas en la ĝardeno（我在花園裡）與 Mi iras en la ĝardenon（我走進花園裡）。",
+    checks: [
+      {
+        question: "「她坐在房間裡」應該是哪一個？",
+        options: ["Ŝi sidas en la ĉambro.", "Ŝi sidas en la ĉambron.", "Ŝi sidas al la ĉambron."],
+        answer: 0,
+        explain: "sidas 描述靜態位置，所以 en 後面不加方向受格 -n。",
+      },
+      {
+        question: "「孩子跑進屋裡」應該用哪個詞組？",
+        options: ["en la domo", "en la domon", "al la domon"],
+        answer: 1,
+        explain: "從外面移動到裡面時，en 後的終點使用 -n：en la domon。",
+      },
+      {
+        question: "「我們前往學校」應該怎麼說？",
+        options: ["Ni iras al la lernejo.", "Ni iras al la lernejon.", "Ni iras en la lernejo."],
+        answer: 0,
+        explain: "al 本身已經表示方向，後面的名詞通常不再加方向 -n。",
+      },
+    ],
+  },
+  {
+    id: "comparisons",
+    unit: "09",
+    title: "比一比就明白",
+    subtitle: "比較級與最高級",
+    eyebrow: "5 分鐘觀念",
+    summary: "Esperanto 不必改變形容詞本身：pli 表示「更……」，plej 表示「最……」，比較對象則由 ol 接上。規則固定，長字短字都一樣。",
+    endings: [
+      { ending: "pli", label: "比較級 · 更……", example: "pli rapida 更快的", tone: "sun" },
+      { ending: "ol", label: "比較對象 · 比……", example: "ol mi 比我", tone: "coral" },
+      { ending: "plej", label: "最高級 · 最……", example: "la plej alta 最高的", tone: "mint" },
+    ],
+    example: {
+      eo: "La neĝo estas pli blanka ol la papero.",
+      zh: "雪比紙更白。",
+      parts: [
+        { text: "La neĝo", role: "比較主體 · 雪", tone: "mint" },
+        { text: "estas", role: "是", tone: "violet" },
+        { text: "pli blanka", role: "更白", tone: "sun" },
+        { text: "ol la papero", role: "比紙", tone: "coral" },
+      ],
+    },
+    tip: "反方向也很規律：malpli 是「比較不……」，malplej 是「最不……」。",
+    checks: [
+      {
+        question: "「這朵花比那朵更美」需要哪個結構？",
+        options: ["plej bela de", "pli bela ol", "bela pli al"],
+        answer: 1,
+        explain: "比較兩者使用 pli + 形容詞 + ol：pli bela ol。",
+      },
+      {
+        question: "「最高的山」應該怎麼說？",
+        options: ["la pli alta monto", "la plej alta monto", "la alta plej monto"],
+        answer: 1,
+        explain: "最高級使用 plej，通常與 la 一起限定獨一的對象：la plej alta monto。",
+      },
+      {
+        question: "Ŝi kantas ___ bone ol mi.（她唱得比我好。）",
+        options: ["pli", "plej", "tre"],
+        answer: 0,
+        explain: "句中有比較對象 ol mi，因此前面使用 pli bone。",
+      },
+    ],
+  },
+  {
+    id: "questions-negation",
+    unit: "10",
+    title: "問與不問",
+    subtitle: "問句與否定",
+    eyebrow: "6 分鐘觀念",
+    summary: "是非問句把 ĉu 放到句首；否定時，ne 緊靠要否定的內容。neniu、nenio、nenie 等 neni- 表格詞本身已帶有「沒有任何」的意思。",
+    endings: [
+      { ending: "ĉu", label: "是非問句 · 是否……", example: "Ĉu vi venos? 你會來嗎？", tone: "sun" },
+      { ending: "ne", label: "否定 · 不／沒有", example: "mi ne scias 我不知道", tone: "coral" },
+      { ending: "neni-", label: "零個 · 沒有任何", example: "neniu 沒有人", tone: "mint" },
+    ],
+    example: {
+      eo: "Ĉu vi komprenas? Ne, mi ne komprenas.",
+      zh: "你明白嗎？不，我不明白。",
+      parts: [
+        { text: "Ĉu", role: "是非問句", tone: "sun" },
+        { text: "vi komprenas?", role: "你明白嗎", tone: "violet" },
+        { text: "Ne", role: "否定回答", tone: "coral" },
+        { text: "mi ne komprenas", role: "我不明白", tone: "mint" },
+      ],
+    },
+    tip: "有 neni- 詞時通常不再加 ne：Mi vidis neniun（我誰也沒看見）。",
+    checks: [
+      {
+        question: "要把 Vi parolas Esperanton. 變成是非問句，應該加什麼？",
+        options: ["Kio", "Ĉu", "Ne"],
+        answer: 1,
+        explain: "詢問整句是否成立時，把 ĉu 放在句首：Ĉu vi parolas Esperanton?",
+      },
+      {
+        question: "哪一句正確表示「我今天不工作」？",
+        options: ["Mi laboras ne hodiaŭ.", "Mi ne laboras hodiaŭ.", "Ne mi laboras hodiaŭ."],
+        answer: 1,
+        explain: "要否定動作 laboras，ne 放在動詞前：mi ne laboras。",
+      },
+      {
+        question: "「我誰也沒看見」最自然的說法是哪個？",
+        options: ["Mi ne vidis neniun.", "Mi vidis neniun.", "Mi neniu vidis."],
+        answer: 1,
+        explain: "neniun 已經表示「沒有任何人」並帶受格 -n，通常不再另外加 ne。",
+      },
+    ],
+  },
 ];
 
 const translations = [
@@ -306,7 +482,7 @@ const translations = [
   {
     id: "learning-today",
     english: "I am learning Esperanto today.",
-    note: "提示：語言名稱通常不用冠詞",
+    note: "提示：Esperanto 是名詞形式的語言名稱，不用冠詞；la angla、la franca 等形容詞形式要用 la",
     answers: ["Mi lernas Esperanton hodiaŭ.", "Hodiaŭ mi lernas Esperanton.", "Mi hodiaŭ lernas Esperanton."],
     required: ["mi", "lernas", "esperanton", "hodiaŭ"],
   },
@@ -625,12 +801,12 @@ export default function Home() {
           <div className="content-wrap course-complete">
             <div className="completion-burst" aria-hidden="true">
               <span>✦</span>
-              <strong>6 / 6</strong>
+              <strong>{lessons.length} / {lessons.length}</strong>
               <small>finita!</small>
             </div>
             <div className="eyebrow">基礎路線完成</div>
             <h1>Vi sukcesis<span>!</span></h1>
-            <p className="completion-lead">你已經完成所有基礎文法單元。詞尾、受格、動詞、代名詞、表格詞與自由語序，都已經成為你的 Esperanto 工具箱。</p>
+            <p className="completion-lead">你已經完成所有基礎文法單元。從詞尾、受格與動詞，到冠詞、介系詞、比較、問句與自由語序，都已經成為你的 Esperanto 工具箱。</p>
             <div className="completion-lessons" aria-label="已完成的單元">
               {lessons.map((item) => (
                 <span key={item.id}><i>✓</i>{item.title}</span>
@@ -741,7 +917,13 @@ export default function Home() {
                 id="translation-input"
                 value={translation}
                 onChange={(event) => { setTranslation(event.target.value); setTranslationResult(null); setShowAnswers(false); }}
-                onKeyDown={(event) => { if ((event.metaKey || event.ctrlKey) && event.key === "Enter") checkTranslation(); }}
+                onKeyDown={(event) => {
+                  if (!(event.metaKey || event.ctrlKey) || event.key !== "Enter") return;
+                  event.preventDefault();
+                  if (translationResult === "correct") nextExercise();
+                  else checkTranslation();
+                }}
+                aria-keyshortcuts="Meta+Enter Control+Enter"
                 placeholder="例如：La kato..."
                 spellCheck={false}
               />
@@ -771,7 +953,7 @@ export default function Home() {
               <div className="translation-actions">
                 <button className="text-action" onClick={() => setShowAnswers((shown) => !shown)}>◎ {showAnswers ? "收起參考答案" : "查看參考答案"}</button>
                 {translationResult === "correct" ? (
-                  <button className="primary-action" onClick={nextExercise}>{exercisePosition === exerciseOrder.length - 1 ? "開始新一輪" : "下一題"} <span>→</span></button>
+                  <button className="primary-action" onClick={nextExercise}>{exercisePosition === exerciseOrder.length - 1 ? "開始新一輪" : "下一題"} <span>⌘↵</span></button>
                 ) : (
                   <button className="primary-action" onClick={checkTranslation} disabled={!translation.trim()}>檢查答案 <span>⌘↵</span></button>
                 )}
