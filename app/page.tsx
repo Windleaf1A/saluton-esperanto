@@ -469,6 +469,224 @@ const lessons: Lesson[] = [
       },
     ],
   },
+  {
+    id: "conjunctions",
+    unit: "11",
+    title: "把句子接起來",
+    subtitle: "連接詞",
+    eyebrow: "5 分鐘觀念",
+    summary: "連接詞像句子的接頭：kaj 把同類內容並列，aŭ 提供選擇，sed 則把語意轉向。它們不會改變前後詞語的文法形式。",
+    endings: [
+      { ending: "kaj", label: "而且／和 · 並列", example: "kafo kaj teo 咖啡和茶", tone: "mint" },
+      { ending: "aŭ", label: "或者 · 選擇", example: "hodiaŭ aŭ morgaŭ 今天或明天", tone: "sun" },
+      { ending: "sed", label: "但是 · 轉折", example: "laca sed feliĉa 累但開心", tone: "coral" },
+    ],
+    example: {
+      eo: "Mi estas laca, sed mi ankoraŭ lernas.",
+      zh: "我很累，但我還在學習。",
+      parts: [
+        { text: "Mi estas laca", role: "第一個完整想法", tone: "mint" },
+        { text: "sed", role: "但是 · 轉折", tone: "coral" },
+        { text: "mi ankoraŭ lernas", role: "第二個完整想法", tone: "violet" },
+      ],
+    },
+    tip: "kaj、aŭ、sed 可以連接單字、片語或完整子句，但前後最好是功能相同的內容，句子會更清楚。",
+    checks: [
+      {
+        question: "「我喝咖啡和茶」中間應該使用哪個連接詞？",
+        options: ["kaj", "aŭ", "sed"],
+        answer: 0,
+        explain: "兩樣東西一起並列時使用 kaj：Mi trinkas kafon kaj teon。",
+      },
+      {
+        question: "Vi povas veni hodiaŭ ___ morgaŭ.（你可以今天或明天來。）",
+        options: ["kaj", "aŭ", "sed"],
+        answer: 1,
+        explain: "在兩個時間之間提供選擇，所以使用 aŭ。",
+      },
+      {
+        question: "La tasko estas malfacila, ___ interesa.（任務很難，但很有趣。）",
+        options: ["kaj", "aŭ", "sed"],
+        answer: 2,
+        explain: "前後語意形成轉折，因此使用 sed。",
+      },
+    ],
+  },
+  {
+    id: "numbers-quantity",
+    unit: "12",
+    title: "數字也有詞尾",
+    subtitle: "數詞、序數與 da",
+    eyebrow: "6 分鐘觀念",
+    summary: "基本數詞本身不加 -j 或 -n；加上形容詞詞尾 -a 就變成序數。說「一杯的水」這類數量時，則用 da 把量詞和物質接起來。",
+    endings: [
+      { ending: "tri", label: "基數 · 三個", example: "tri libroj 三本書", tone: "mint" },
+      { ending: "tria", label: "序數 · 第三個", example: "la tria libro 第三本書", tone: "sun" },
+      { ending: "da", label: "數量 · ……的", example: "glaso da akvo 一杯水", tone: "coral" },
+    ],
+    example: {
+      eo: "Mi legis la unuan ĉapitron kaj trinkis tason da teo.",
+      zh: "我讀了第一章，並喝了一杯茶。",
+      parts: [
+        { text: "Mi legis", role: "我讀了", tone: "violet" },
+        { text: "la unuan ĉapitron", role: "第一章 · 序數受格", tone: "sun" },
+        { text: "kaj trinkis", role: "並且喝了", tone: "mint" },
+        { text: "tason da teo", role: "一杯茶 · 數量", tone: "coral" },
+      ],
+    },
+    tip: "基數 unu、du、tri 不變化；序數像普通形容詞一樣能接 -j、-n，例如 la unuaj tagoj、la unuan tagon。",
+    checks: [
+      {
+        question: "「我買了三本書」應該怎麼說？",
+        options: ["Mi aĉetis trijn librojn.", "Mi aĉetis tri librojn.", "Mi aĉetis tri libron."],
+        answer: 1,
+        explain: "tri 本身不加 -j 或 -n；複數受格標在 librojn 上。",
+      },
+      {
+        question: "「第二天」是哪一個？",
+        options: ["la du tago", "la dua tago", "la due tago"],
+        answer: 1,
+        explain: "基數 du 加上形容詞詞尾 -a，變成序數 dua（第二）。",
+      },
+      {
+        question: "「兩杯咖啡」應該怎麼說？",
+        options: ["du tasoj de kafo", "du tasoj da kafo", "du da tasoj kafo"],
+        answer: 1,
+        explain: "容器在這裡表示數量，使用 da 連接：du tasoj da kafo。",
+      },
+    ],
+  },
+  {
+    id: "participles",
+    unit: "13",
+    title: "把動作變成形容詞",
+    subtitle: "主動與被動分詞",
+    eyebrow: "7 分鐘觀念",
+    summary: "分詞讓動作可以描述人或事物。-ant-、-int-、-ont- 描寫做動作的人；-at-、-it-、-ot- 描寫承受動作的對象。",
+    endings: [
+      { ending: "-ant-", label: "主動進行 · 正在做", example: "leganta infano 正在閱讀的孩子", tone: "mint" },
+      { ending: "-int-", label: "主動完成 · 已經做", example: "leginta virino 讀完了的女子", tone: "sun" },
+      { ending: "-it-", label: "被動完成 · 已被做", example: "skribita letero 寫好的信", tone: "coral" },
+    ],
+    example: {
+      eo: "La leganta knabino trovis skribitan leteron.",
+      zh: "正在閱讀的女孩找到了一封寫好的信。",
+      parts: [
+        { text: "La leganta knabino", role: "正在讀的女孩 · 主動", tone: "mint" },
+        { text: "trovis", role: "找到了 · 過去", tone: "violet" },
+        { text: "skribitan leteron", role: "寫好的信 · 被動受格", tone: "coral" },
+      ],
+    },
+    tip: "先看主動 ANT／INT／ONT 或被動 AT／IT／OT，再看 A／I／O：它們分別對應進行、完成與尚未發生。",
+    checks: [
+      {
+        question: "leganta infano 表示什麼？",
+        options: ["正在閱讀的孩子", "讀完了的孩子", "將被閱讀的孩子"],
+        answer: 0,
+        explain: "-ant- 是主動進行分詞，所以描述孩子正在做閱讀這個動作。",
+      },
+      {
+        question: "skribita letero 表示什麼？",
+        options: ["正在寫信的人", "已經寫好的信", "將要寫的信"],
+        answer: 1,
+        explain: "-it- 是被動完成分詞，信已經承受「寫」這個動作。",
+      },
+      {
+        question: "「將要被閱讀的書」應該是哪一個？",
+        options: ["leganta libro", "legita libro", "legota libro"],
+        answer: 2,
+        explain: "-ot- 是被動、尚未發生的分詞，因此 legota libro 是將被閱讀的書。",
+      },
+    ],
+  },
+  {
+    id: "affixes",
+    unit: "14",
+    title: "字根的變形魔法",
+    subtitle: "前綴、後綴與造詞",
+    eyebrow: "6 分鐘觀念",
+    summary: "Esperanto 的詞綴像可重複使用的零件：mal- 做出反義詞，re- 表示再次或返回，-et- 與 -eg- 則調整大小或程度。",
+    endings: [
+      { ending: "mal-", label: "相反 · 反義", example: "bona → malbona 好 → 壞", tone: "coral" },
+      { ending: "re-", label: "再次／返回", example: "legi → relegi 讀 → 重讀", tone: "mint" },
+      { ending: "-et- / -eg-", label: "較小／較大", example: "dometo / domego 小屋／巨宅", tone: "sun" },
+    ],
+    example: {
+      eo: "Mi relegas la libreton en la granda domego.",
+      zh: "我在那棟大宅裡重讀這本小冊子。",
+      parts: [
+        { text: "Mi re-leg-as", role: "我再次閱讀", tone: "mint" },
+        { text: "la libr-et-on", role: "小冊子 · 受詞", tone: "sun" },
+        { text: "en la", role: "在……裡", tone: "plain" },
+        { text: "granda dom-eg-o", role: "巨大的房子", tone: "coral" },
+      ],
+    },
+    tip: "一個詞可以疊上多個透明零件；最後仍要保留決定詞性的詞尾，例如 re-leg-as、mal-grand-a、dom-et-o。",
+    checks: [
+      {
+        question: "feliĉa 是「快樂的」，「不快樂的」是哪一個？",
+        options: ["refeliĉa", "malfeliĉa", "feliĉega"],
+        answer: 1,
+        explain: "mal- 會建立反義詞，所以 malfeliĉa 是「不快樂的」。",
+      },
+      {
+        question: "「重讀」應該怎麼說？",
+        options: ["relegi", "mallegi", "legeti"],
+        answer: 0,
+        explain: "re- 表示再次，因此 relegi 是再讀一次、重讀。",
+      },
+      {
+        question: "「小屋」是哪一個？",
+        options: ["domego", "dometo", "maldomo"],
+        answer: 1,
+        explain: "-et- 表示較小或較弱的程度，所以 dometo 是小屋。",
+      },
+    ],
+  },
+  {
+    id: "subclauses",
+    unit: "15",
+    title: "句子裡再放一句",
+    subtitle: "ke、se 與關係子句",
+    eyebrow: "8 分鐘觀念",
+    summary: "子句能在大句子裡充當一個部分。ke 引出想法或內容，se 設定條件，ki- 表格詞則能把人物或事物和補充說明連起來。",
+    endings: [
+      { ending: "ke", label: "內容 · ……這件事", example: "Mi scias, ke... 我知道……", tone: "mint" },
+      { ending: "se", label: "條件 · 如果", example: "Se pluvos... 如果下雨……", tone: "sun" },
+      { ending: "ki-", label: "關係 · 那個……的", example: "la libro, kiun... 那本……的書", tone: "coral" },
+    ],
+    example: {
+      eo: "Mi scias, ke vi legas la libron, kiun mi rekomendis.",
+      zh: "我知道你正在讀我推薦的那本書。",
+      parts: [
+        { text: "Mi scias", role: "主要句 · 我知道", tone: "mint" },
+        { text: "ke", role: "引出知道的內容", tone: "sun" },
+        { text: "vi legas la libron", role: "內容子句", tone: "violet" },
+        { text: "kiun mi rekomendis", role: "補充說明那本書", tone: "coral" },
+      ],
+    },
+    tip: "關係詞要依它在子句裡的角色變化：la libro, kiun mi rekomendis 中，kiun 是 rekomendis 的受詞，所以要加 -n。",
+    checks: [
+      {
+        question: "「我想她會來」應該怎麼說？",
+        options: ["Mi pensas ŝi venos.", "Mi pensas, ke ŝi venos.", "Mi pensas, se ŝi venos."],
+        answer: 1,
+        explain: "Esperanto 用 ke 明確引出 pensas 的內容，不能像英文 that 一樣直接省略。",
+      },
+      {
+        question: "哪一句表示「如果下雨，我們會待在家」？",
+        options: ["Ke pluvos, ni restos hejme.", "Se pluvos, ni restos hejme.", "Sed pluvos, ni restos hejme."],
+        answer: 1,
+        explain: "se 引出條件，意思是「如果」。",
+      },
+      {
+        question: "la libro, ___ mi legis（我讀過的那本書）",
+        options: ["kiu", "kiun", "kie"],
+        answer: 1,
+        explain: "關係詞在子句中是 legis 的受詞，所以使用帶 -n 的 kiun。",
+      },
+    ],
+  },
 ];
 
 const translations = [
@@ -811,7 +1029,7 @@ export default function Home() {
             </div>
             <div className="eyebrow">基礎路線完成</div>
             <h1>Vi sukcesis<span>!</span></h1>
-            <p className="completion-lead">你已經完成所有基礎文法單元。從詞尾、受格與動詞，到冠詞、介系詞、比較、問句與自由語序，都已經成為你的 Esperanto 工具箱。</p>
+            <p className="completion-lead">你已經完成所有文法單元。從詞尾、受格與動詞，到數詞、分詞、造詞與子句，都已經成為你的 Esperanto 工具箱。</p>
             <div className="completion-lessons" aria-label="已完成的單元">
               {lessons.map((item) => (
                 <span key={item.id}><i>✓</i>{item.title}</span>

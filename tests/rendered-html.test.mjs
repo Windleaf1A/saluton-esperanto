@@ -43,7 +43,7 @@ test("includes randomized practice, completion, and x-system support", async () 
   ]);
 
   assert.equal((page.match(/id: "[a-z-]+",\n\s+english:/g) ?? []).length, 12);
-  assert.equal((page.match(/checks: \[/g) ?? []).length, 10);
+  assert.equal((page.match(/checks: \[/g) ?? []).length, 15);
   assert.match(page, /function shuffleIndexes/);
   assert.match(page, /function convertXSystem/);
   assert.match(page, /setTranslation\(converted\)/);
@@ -52,6 +52,11 @@ test("includes randomized practice, completion, and x-system support", async () 
   assert.match(page, /translationResult === "correct"\) nextExercise\(\)/);
   assert.match(page, /Esperanto 是名詞形式的語言名稱，不用冠詞/);
   assert.match(page, /id: "questions-negation"/);
+  assert.match(page, /id: "conjunctions"/);
+  assert.match(page, /id: "numbers-quantity"/);
+  assert.match(page, /id: "participles"/);
+  assert.match(page, /id: "affixes"/);
+  assert.match(page, /id: "subclauses"/);
   assert.match(page, /Tiu ĉi libro estas pli interesa ol tiu libro\./);
   assert.match(css, /\.course-complete/);
 });
